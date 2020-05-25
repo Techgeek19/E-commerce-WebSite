@@ -28,22 +28,26 @@
                             
                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                 <ul class="navbar-nav ml-auto py-4 py-md-0">
-                                    <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4 active">
-                                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Home</a>
-                                        <div class="dropdown-menu">
+                                    <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                                        <a class="nav-link" href="/outlet/">Home</a>
+                                        <!-- <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="outlet/" role="button" aria-haspopup="true" aria-expanded="false">Home</a> -->
+                                        <!-- <div class="dropdown-menu">
                                             <a class="dropdown-item" href="#">Action</a>
                                             <a class="dropdown-item" href="#">Another action</a>
                                             <a class="dropdown-item" href="#">Something else here</a>
                                             <a class="dropdown-item" href="#">Another action</a>
-                                        </div>
+                                        </div> -->
                                     </li>
                                     <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-                                        <a class="nav-link" href="#">Portfolio</a>
+                                        <a class="nav-link" href="/outlet/about">About Us</a>
                                     </li>
                                     <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-                                        <a class="nav-link" href="#">Agency</a>
+                                        <a class="nav-link" href="/outlet/tracker">Tracker</a>
                                     </li>
                                     <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                                        <a class="nav-link" href="/outlet/contact">Contact Us</a>
+                                    </li>
+                                    <!-- <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
                                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Services</a>
                                         <div class="dropdown-menu">
                                             <a class="dropdown-item" href="#">Action</a>
@@ -51,12 +55,9 @@
                                             <a class="dropdown-item" href="#">Something else here</a>
                                             <a class="dropdown-item" href="#">Another action</a>
                                         </div>
-                                    </li>
+                                    </li> -->
                                     <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-                                        <a class="nav-link" href="#">Journal</a>
-                                    </li>
-                                    <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-                                        <a class="nav-link" href="#">Contact</a>
+                                        <a class="nav-link" id="popcart" data-container="body" data-toggle="popover" data-placement="bottom" data-html="true" style="cursor:pointer;"><i class="fa fa-shopping-cart mr-1"></i></i> <span class="badge badge-danger" id="cart">0</span></a></a>
                                     </li>
                                 </ul>
                             </div>
@@ -657,7 +658,44 @@
         });  
         
       })(jQuery); 
+
+// =======================================Shopping Cart Logic===================================
+console.log('up working')
+// if button isn't clicked or item is already there 
+if(localStorage.getItem('cart')==null){
+  var cart={}
+}
+else
+{
+// else Load cart 
+  cart= JSON.parse(localStorage.getItem('cart'));
+  document.getElementById('cart').innerHTML= Object.keys(cart).length
+}
+
+$('.cart').click(function(){
+  console.log('clicked');
+  var idString = this.id.toString();
+  // console.log(idString); o/p = pi7
+  //cart is a key value pair of 
+  // if cart[idstring]== something
+  if(cart[idString] != undefined){
+    cart[idString]= cart[idString] + 1;
+  }
+  else{
+    cart[idString] = 1;
+  }
+  console.log(cart);
+  //value will be still there after reloading
+  localStorage.setItem('cart', JSON.stringify(cart))
+  document.getElementById('cart').innerHTML = Object.keys(cart).length;
+
+});
+
+// =======================================Shopping Cart Ends===================================
+
+// ====================================POPover=================================
     </script>
+
     {% block JS %} {% endblock %}
 
     <div class="my-5 py-5">

@@ -3,28 +3,39 @@ from .models import Product
 
 # Create your views here.
 def index(request):
-    # return HttpResponse("Home Page")
-    obj= Product.objects.all()
-    return render(request,'outlet/index.html', {'obj': obj})
+    # obj= Product.objects.all()
+    # allprod= [[obj],[obj]]
+    allprod= []
+    cat_prod = Product.objects.values('category', 'id')
+    #.values returns dictionaries 
+    # OUTPUT[{'category': 'test', 'id': 1}, {'category': 'testing', 'id': 2}, {'category': 'test 3', 'id': 3}, {'category': 'test 4 cat', 'id': 4}, {'category': 'test 5', 'id': 5}, {'category': 'test', 'id': 6}]
+    cat_items= { item['category'] for item in cat_prod}
+    # output {'testing', 'test', 'test 4 cat', 'test 3', 'test 5'} <-- Category Items
+    for c in cat_items:
+        prod= Product.objects.filter(category= c) 
+        #categorywise Filter
+        allprod.append([prod])
+    return render(request,'outlet/index.html', {'allprod': allprod})
 
 def about(request):
-    # return HttpResponse("About")
-    return render(request,'outlet/about.html', {})
-
+    return render(request,'outlet/about.html')
 
 def contact(request):
-    return HttpResponse("Contact")
+    return render(request,'outlet/contact.html', {})
 
 def tracker(request):
-    return HttpResponse("Tracker")
+    return render(request,'outlet/tracker.html', {})
 
 def search(request):
-    return HttpResponse("Search")
+    return render(request,'outlet/search.html', {})
 
-def prodview(request):
-    return HttpResponse("Product View")
+def prodview(request, id):
+    #fetching product using id
+    obj= Product.objects.filter(id=id)
+    print(obj[0])
+    return render(request,'outlet/prodview.html', {'obj':obj[0]})
 
 def checkout(request):
-    return HttpResponse("CheckOUT")
+    return render(request,'outlet/about.html', {})
 
     
