@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponse
-from .models import Product
+from .models import Product, Contact
 
 # Create your views here.
 def index(request):
@@ -21,6 +21,12 @@ def about(request):
     return render(request,'outlet/about.html')
 
 def contact(request):
+    if request.method=="POST":
+        name = request.POST.get('name', '')
+        email = request.POST.get('email', '')
+        message = request.POST.get('message', '')
+        contact = Contact(name=name, email=email, message=message)
+        contact.save()
     return render(request,'outlet/contact.html', {})
 
 def tracker(request):
@@ -36,6 +42,6 @@ def prodview(request, id):
     return render(request,'outlet/prodview.html', {'obj':obj[0]})
 
 def checkout(request):
-    return render(request,'outlet/about.html', {})
+    return render(request,'outlet/checkout.html', {})
 
     

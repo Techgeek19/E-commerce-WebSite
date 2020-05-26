@@ -660,36 +660,36 @@
       })(jQuery); 
 
 // =======================================Shopping Cart Logic===================================
-console.log('up working')
-// if button isn't clicked or item is already there 
-if(localStorage.getItem('cart')==null){
-  var cart={}
-}
-else
-{
-// else Load cart 
-  cart= JSON.parse(localStorage.getItem('cart'));
-  document.getElementById('cart').innerHTML= Object.keys(cart).length
-}
+// console.log('up working')
+// // if button isn't clicked or item is already there 
+// if(localStorage.getItem('cart')==null){
+//   var cart={}
+// }
+// else
+// {
+// // else Load cart 
+//   cart= JSON.parse(localStorage.getItem('cart'));
+//   document.getElementById('cart').innerHTML= Object.keys(cart).length
+// }
 
-$('.cart').click(function(){
-  console.log('clicked');
-  var idString = this.id.toString();
-  // console.log(idString); o/p = pi7
-  //cart is a key value pair of 
-  // if cart[idstring]== something
-  if(cart[idString] != undefined){
-    cart[idString]= cart[idString] + 1;
-  }
-  else{
-    cart[idString] = 1;
-  }
-  console.log(cart);
-  //value will be still there after reloading
-  localStorage.setItem('cart', JSON.stringify(cart))
-  document.getElementById('cart').innerHTML = Object.keys(cart).length;
+// $('.cart').click(function(){
+//   console.log('clicked');
+//   var idString = this.id.toString();
+//   // console.log(idString); o/p = pi7
+//   //cart is a key value pair of 
+//   // if cart[idstring]== something
+//   if(cart[idString] != undefined){
+//     cart[idString]= cart[idString] + 1;
+//   }
+//   else{
+//     cart[idString] = 1;
+//   }
+//   console.log(cart);
+//   //value will be still there after reloading
+//   localStorage.setItem('cart', JSON.stringify(cart))
+//   document.getElementById('cart').innerHTML = Object.keys(cart).length;
 
-});
+// });
 
 // =======================================Shopping Cart Ends===================================
 

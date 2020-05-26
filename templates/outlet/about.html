@@ -2,41 +2,108 @@
 
 {% block title %} {% endblock %}
 
-{% block body %} 
-<div class="section full-height">
-    <div class="absolute-center">
-        <div class="section">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-            <h1><span>A</span><span>b</span><span>o</span><span>u</span><span>t</span><span>U</span><span>s</span><br>
-            <span>m</span><span>e</span><span>n</span><span>u</span></h1>
-            <p>Change Theme</p>	
-                    </div>	
-                </div>		
-            </div>		
-        </div>
-        <div class="section mt-5">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div id="switch">
-                            <div id="circle"></div>
-                        </div>
-                    </div>	
-                </div>		
-            </div>			
-        </div>
-    </div>
+{% block body %}  
+<div class="row" style="margin-top: 100px;">
+    <div class="col-12">
+    <h1><span>A</span><span>b</span><span>o</span><span>u</span><span>t</span><span>&nbsp;</span><span>U</span><span>s</span></h1>
+        </div>	
+    </div>		
+<div class="section mt-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div id="switch">
+                    <div id="circle"></div>
+                </div>
+            </div>	
+        </div>		
+    </div>			
 </div>
+<section class="text-center about mt-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 col-sm-6 col-ex-12 about-item wow lightSpeedIn" data-wow-offset="200" >
+          <span class="fa fa-info"></span>
+          <h2 class="mt-4">Section 1</h2>
+          <p class="lead">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled</p>
+        </div>
+        <div class="col-lg-4 col-sm-6 col-ex-12 about-item wow lightSpeedIn" data-wow-offset="200">
+          <a href="https://github.com/techgeek19"><span class="fab fa-github"></span></a>
+          <h2 class="mt-4">Section 2 </h2>
+          <p class="lead">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum </p>
+        </div>
+        <div class="clearfix visible-md-block visible-sm-block"></div>
+        <div class="col-lg-4 col-sm-6 col-ex-12 about-item wow lightSpeedIn" data-wow-offset="200">
+          <span class="fa fa-file"></span>
+          <h2 class="mt-4">Section 3</h2>
+          <p class="lead">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled</p>
+        </div>
+        
+      </div>
+      
+    </div>
+  </section>
 {% endblock %}
 
-{% block CSS %} {% endblock %}
+{% block CSS %} 
+<style>
+    .about{
+	cursor: pointer;
+	/* background-color: #6B062D; */
+	color: #6B062D;
+	padding-top: 20px;
+	padding-bottom: 30px;
+}
+.about h1 {
+	padding: 10px 0;
+	margin-bottom: 20px;
+}
+.about h2 {
+	opacity: .8;
+}
+.about span {
+	display: block;
+	width: 100px;
+	height: 100px;
+	line-height: 100px;
+	margin:auto;
+	border-radius:50%;  
+	font-size: 40px;
+	color: #FFFFFF;
+	opacity: 0.7;
+	background-color: #4C0822;
+	border: 2px solid #4C0822;
 
-{% block JS %} 
-<script>
-    $('#popcart').popover();
-    document.getElementById("popcart").setAttribute('data-content', '<h5>Cart for your items in my shopping cart</h5>');  
-    </script>
-    
+	webkit-transition:all .5s ease;
+ 	moz-transition:all .5s ease;
+ 	os-transition:all .5s ease;
+ 	transition:all .5s ease;
+
+}
+.about-item:hover span{
+	opacity: 1;	
+	border: 2px solid #CC0039;
+	font-size: 42px;
+	-webkit-transform: scale(1.1,1.1) rotate(360deg) ;
+	-moz-transform: scale(1.1,1.1) rotate(360deg) ;
+	-o-transform: scale(1.1,1.1) rotate(360deg) ;
+	transform: scale(1.1,1.1) rotate(360deg) ;
+}
+.about-item:hover h2{
+	opacity: 1;
+	-webkit-transform: scale(1.1,1.1)  ;
+	-moz-transform: scale(1.1,1.1)  ;
+	-o-transform: scale(1.1,1.1)  ;
+	transform: scale(1.1,1.1) ;
+}
+.about .lead{
+	/* color: #CC0039; */
+	color: #3e3d3d;
+    font-size: 14px;
+	/* font-weight: bold; */
+}
+
+</style>
 {% endblock %}
+
+{% block JS %} {% endblock %}
