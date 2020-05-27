@@ -1,5 +1,7 @@
 from django.shortcuts import render, HttpResponse
-from .models import Product, Contact
+from django.contrib import messages
+from .models import Product, Contact, Orders, OrderUpdate
+import json
 
 # Create your views here.
 def index(request):
@@ -27,9 +29,26 @@ def contact(request):
         message = request.POST.get('message', '')
         contact = Contact(name=name, email=email, message=message)
         contact.save()
+        messages.info(request, 'Your message has been delivered')
     return render(request,'outlet/contact.html', {})
 
 def tracker(request):
+    if request.method=="POST":
+        orderId = request.POST.get('orderId', '')
+        email = request.POST.get('email', '')
+        try:
+            order = Orders.objects.filter(order_id=orderId, email=email)
+            if len(order)>0:
+                update = OrderUpdate.objects.filter(order_id=orderId)
+                updates = []
+                for item in update:
+                    updates.append({'text': item.update_desc, 'time': item.timestamp})
+                    response = json.dumps(updates, default=str)
+                return HttpResponse(response)
+            else:
+                return HttpResponse('{}')
+        except Exception as e:
+            return HttpResponse('{}')
     return render(request,'outlet/tracker.html', {})
 
 def search(request):
@@ -42,6 +61,23 @@ def prodview(request, id):
     return render(request,'outlet/prodview.html', {'obj':obj[0]})
 
 def checkout(request):
+    if request.method=="POST":
+        items_json = request.POST.get('itemsJson', '')
+        name = request.POST.get('name', '')
+        email = request.POST.get('email', '')
+        address = request.POST.get('address1', '') + " " + request.POST.get('address2', '')
+        city = request.POST.get('city', '')
+        state = request.POST.get('state', '')
+        zip_code = request.POST.get('zip_code', '')
+        phone = request.POST.get('phone', '')
+        order = Orders(items_json=items_json, name=name, email=email, address=address, city=city,
+                       state=state, zip_code=zip_code, phone=phone)
+        order.save()
+        update = OrderUpdate(order_id=order.order_id, update_desc="The order has been placed")
+        update.save()
+        messages.info(request, 'Thanks for ordering with us.')
+        id = order.order_id
+        return render(request, 'outlet/checkout.html', {'id': id})
     return render(request,'outlet/checkout.html', {})
 
     
