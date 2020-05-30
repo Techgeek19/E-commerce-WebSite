@@ -1,12 +1,21 @@
 from django.shortcuts import render, HttpResponse
 from django.contrib import messages
 from .models import Product, Contact, Orders, OrderUpdate
+from math import ceil
 import json
 
 # Create your views here.
+
+
+# def index(request):
+#     obj= Product.objects.all()
+#     return render(request,'outlet/a.html',{'obj':obj})
+
+
+
 def index(request):
-    # obj= Product.objects.all()
-    # allprod= [[obj],[obj]]
+    # # obj= Product.objects.all()
+    # # allprod= [[obj],[obj]]
     allprod= []
     cat_prod = Product.objects.values('category', 'id')
     #.values returns dictionaries 
@@ -17,7 +26,40 @@ def index(request):
         prod= Product.objects.filter(category= c) 
         #categorywise Filter
         allprod.append([prod])
-    return render(request,'outlet/index.html', {'allprod': allprod})
+    # allProds = []
+    # catprods = Product.objects.values('category', 'id')
+    # cats = {item['category'] for item in catprods}
+    # for cat in cats:
+    #     prod = Product.objects.filter(category=cat)
+    #     n = len(prod)
+    #     nSlides = n // 4 + ceil((n / 4) - (n // 4))
+    #     allProds.append([prod, range(1, nSlides), nSlides])
+    # params = {'allProds':allProds}
+    return render(request,'outlet/b.html',{'allprod':allprod})
+
+def searchMatch(query, item):
+    '''return true only if query matches the item'''
+    if query in item.desc.lower() or query in item.product_name.lower() or query in item.category.lower():
+        return True
+    else:
+        return False
+
+def search(request):
+    query = request.GET.get('search')
+    allprod= []
+    cat_prod = Product.objects.values('category', 'id')
+    cat_items= { item['category'] for item in cat_prod}
+    for c in cat_items:
+        prodtemp= Product.objects.filter(category= c) 
+        prod = [item for item in prodtemp if searchMatch(query, item)]
+        #categorywise Filter
+        if len(prod) != 0:
+            allprod.append([prod])
+    params = {'allprod': allprod, "msg": ""}
+    if len(allprod) == 0 or len(query)<3:
+        params = {'msg': "Please make sure to enter relevant search query"}
+    return render(request,'outlet/search.html', params)
+
 
 def about(request):
     return render(request,'outlet/about.html')
@@ -43,16 +85,16 @@ def tracker(request):
                 updates = []
                 for item in update:
                     updates.append({'text': item.update_desc, 'time': item.timestamp})
-                    response = json.dumps(updates, default=str)
+                    response = json.dumps({"status":"success", "updates": updates, "itemsJson": order[0].items_json}, default=str)
                 return HttpResponse(response)
             else:
-                return HttpResponse('{}')
+                return HttpResponse('{"status":"noitem"}')
         except Exception as e:
-            return HttpResponse('{}')
-    return render(request,'outlet/tracker.html', {})
+            return HttpResponse('{"status":"error"}')
 
-def search(request):
-    return render(request,'outlet/search.html', {})
+    return render(request, 'outlet/tracker.html')
+
+
 
 def prodview(request, id):
     #fetching product using id

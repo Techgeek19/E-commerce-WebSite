@@ -16,6 +16,8 @@
             <ul class="list-group">
             </ul>
         </div>
+        <ul class="list-group-item d-flex justify-content-between align-items-center mt-4"> Cart Total is <span id="totalPrice">0</span>
+        </ul>
     </div>
 </div>
 </div>
@@ -95,6 +97,7 @@ document.location = "/outlet";
 }
 console.log(cart);
 var sum = 0;
+var totalPrice = 0;
 if ($.isEmptyObject(cart)) {
     //if object is empty
     mystr = `<p>Your cart is empty, please add some items to your cart before checking out!</p>`
@@ -103,7 +106,9 @@ if ($.isEmptyObject(cart)) {
     for (item in cart) {
         let name = cart[item][1];
         let qty = cart[item][0];
+        let ItemPrice = cart[item][2];
         sum = sum + qty;
+        totalPrice= totalPrice + qty * ItemPrice;
         mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">
                     ${name}
                     <span class="badge badge-danger badge-pill">${qty}</span>
@@ -112,6 +117,7 @@ if ($.isEmptyObject(cart)) {
     }
 }
 document.getElementById('cart').innerHTML = sum;
+document.getElementById('totalPrice').innerHTML = totalPrice;
 $('#itemsJson').val(JSON.stringify(cart));
 </script>
 {% endblock %}

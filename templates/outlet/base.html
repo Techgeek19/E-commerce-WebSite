@@ -5,11 +5,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->\
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" 
     crossorigin="anonymous">
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.css" rel="stylesheet" />
     <title> {% block title %} {% endblock %} </title>
   </head>
   <body>
@@ -59,6 +59,23 @@
                                     </li> -->
                                     <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
                                         <a class="nav-link" id="popcart" data-container="body" data-toggle="popover" data-placement="bottom" data-html="true" style="cursor:pointer;"><i class="fa fa-shopping-cart mr-1"></i></i> <span class="badge badge-danger" id="cart">0</span></a></a>
+                                    </li>
+                                    <!-- <li class="pl-4 pl-md-0 ml-0 ml-md-4">
+                                        <form method='get' action='/outlet/search/' class="form-inline my-2 my-lg-0">
+                                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search" id="search">
+                                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                                          </form>
+                                    </li> -->
+                                    <li class="pl-4 pl-md-0 ml-0 ml-md-4">
+                                        <form method='get' action='/outlet/search/'><div class="input-group" style="    width: 170px;">
+                                            <input type="text" name="search" id="search" class="form-control" placeholder="Search here!" style="border-top-left-radius: 20px;border-bottom-left-radius: 20px;">
+                                            <div class="input-group-append">
+                                              <button class="btn btn-secondary" type="submit" style="border-top-right-radius: 20px;border-bottom-right-radius: 20px;">
+                                                <i class="fa fa-search"></i>
+                                              </button>
+                                            </div>
+                                          </div>
+                                          </form>
                                     </li>
                                 </ul>
                             </div>
@@ -605,6 +622,62 @@
         border-radius: 50%;
         box-shadow: 0 0 0 20px rgba(12,12,12,.1);
     }
+
+    /* ====================Search========================= */
+    .searchbar{
+    /* margin-bottom: auto; */
+    margin-top: auto;
+    height: 30px;
+    background-color: #353b48;
+    border-radius: 30px;
+    }
+
+    .search_input{
+    color: white;
+    border: 0;
+    outline: 0;
+    background: none;
+    width: 0;
+    caret-color:transparent;
+    line-height: 30px;
+    transition: width 0.4s linear;
+    }
+
+    .searchbar:hover > .search_input{
+    padding: 0 20px;
+    width: 165px;
+    caret-color:red;
+    transition: width 0.4s linear;
+    }
+
+    .searchbar:hover > .search_icon{
+    background: white;
+    color: #e74c3c;
+    }
+
+    .search_icon{
+    height: 31px;
+    width: 34px;
+    float: right;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* border-radius: 8%; */
+    color: white;
+    text-decoration: none;
+    }
+
+ .form-control-feedback {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 2.375rem;
+    height: 2.375rem;
+    line-height: 2.375rem;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
+}
     </style>
     
     {% block CSS %} {% endblock %}
@@ -616,6 +689,7 @@
     <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.js"></script>
     <script>  
     (function($) { "use strict";
         $(function() {

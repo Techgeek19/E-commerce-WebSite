@@ -1,0 +1,279 @@
+{% extends 'outlet/base.html' %}
+{% block title%} Search Results {% endblock %}
+{% block body %}
+<div class="row mb-5" style="margin-top: 90px;">
+    <div class="col-12">
+    <h3 class="text-center">Your Search Results</h3>
+        </div>	
+    </div>	
+<!-- ==============================Carousel Start================================ -->
+{% for object in allprod %}
+  {% for obj in object %}
+<div class="container-fluid">
+  <h4 class="text-center mb-3">{{ obj.0.category|title }}</h4>
+  <div id="myCarousel{{forloop.parentloop.counter}}" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner row w-100 mx-auto">  
+      <div class="carousel-item col-md-3 active mb-5">
+        <div class="card">
+          <img class="card-img-top img-fluid" src="/media/{{ obj.0.image }}" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title" id="namepr{{obj.0.id}}">{{ obj.0.product_name|slice:'0:21'}}..</h5>
+            <p class="card-text">{{ obj.0.desc|slice:'0:28'}}...</p>
+            <h5 class="card-title text-center" id="pricepr{{obj.0.id}}">Rs.&nbsp;{{ obj.0.price }}</h5>
+            <p class="card-text"><small class="text-muted">Last updated {{ obj.0.pub_date }}</small></p>
+            <span id="divpr{{obj.0.id}}" class="divpr">
+            <button id="pr{{ obj.0.id }}" type="button" class="btn btn-primary mt-2 cart"  style="text-align:right;">Add to Cart<i class="fa fa-shopping-cart ml-2"></i>
+            </button></span>
+            <a href="/outlet/productview/{{obj.0.id}}"> 
+              <button id="pv{{ obj.0.id }}" type="button" class="btn btn-primary mt-2"  style="text-align:right;">View<i class="fa fa-eye ml-2"></i>
+            </button>
+          </a>
+          </div>
+        </div>
+      </div>
+      {% for o in obj|slice:"1:" %}
+      <div class="carousel-item col-md-3 mb-4">
+        <div class="card">
+          <img class="card-img-top img-fluid" src="/media/{{ o.image }}" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title" id="namepr{{o.id}}"> {{ o.product_name|slice:'0:21'}}.. </h5>
+            <p class="card-text">{{ o.desc|slice:'0:26'}}...</p>
+            <h5 class="card-title text-center">Rs.&nbsp; <span id="pricepr{{o.id}}">{{ o.price }}</span></h5>
+            <p class="card-text"><small class="text-muted">Last updated on {{ o.pub_date}}</small></p>
+            <span id="divpr{{o.id}}" class="divpr">
+            <button id="pr{{ o.id }}" type="button" class="btn btn-primary mt-2 cart" style="text-align: right;">Add to Cart<i class="fa fa-shopping-cart ml-2"></i>
+            </button></span>
+            <a href="/outlet/productview/{{ o.id}}"> 
+              <button id="pv{{ o.id }}" type="button" class="btn btn-primary mt-2"  style="text-align:right;">View<i class="fa fa-eye ml-2"></i>
+            </button>
+          </a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      
+    </div>
+    <a class="carousel-control-prev" href="#myCarousel{{forloop.parentloop.counter}}" role="button" style="width: 110px;" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#myCarousel{{forloop.parentloop.counter}}" role="button" style="width: 110px;" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+</div>
+<!-- ==============================Carousel End================================ -->
+{% endfor %}  {% endfor %}
+{% endblock %}
+
+{% block CSS %}
+<style>
+  @media (min-width: 768px) {
+  /* show 4 items */
+  .carousel-inner .active,
+  .carousel-inner .active + .carousel-item,
+  .carousel-inner .active + .carousel-item + .carousel-item,
+  .carousel-inner .active + .carousel-item + .carousel-item + .carousel-item {
+    display: block;
+  }
+
+  .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left),
+  .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item,
+  .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item + .carousel-item,
+  .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item + .carousel-item + .carousel-item {
+    transition: none;
+  }
+
+  .carousel-inner .carousel-item-next,
+  .carousel-inner .carousel-item-prev {
+    position: relative;
+    transform: translate3d(0, 0, 0);
+  }
+
+  .carousel-inner .active.carousel-item + .carousel-item + .carousel-item + .carousel-item + .carousel-item {
+    position: absolute;
+    top: 0;
+    right: -25%;
+    z-index: -1;
+    display: block;
+    visibility: visible;
+  }
+
+  /* left or forward direction */
+  .active.carousel-item-left + .carousel-item-next.carousel-item-left,
+  .carousel-item-next.carousel-item-left + .carousel-item,
+  .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item,
+  .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item + .carousel-item,
+  .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item + .carousel-item + .carousel-item {
+    position: relative;
+    transform: translate3d(-100%, 0, 0);
+    visibility: visible;
+  }
+
+  /* farthest right hidden item must be absolue position for animations */
+  .carousel-inner .carousel-item-prev.carousel-item-right {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    display: block;
+    visibility: visible;
+  }
+
+  /* right or prev direction */
+  .active.carousel-item-right + .carousel-item-prev.carousel-item-right,
+  .carousel-item-prev.carousel-item-right + .carousel-item,
+  .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item,
+  .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item + .carousel-item,
+  .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item + .carousel-item + .carousel-item {
+    position: relative;
+    transform: translate3d(100%, 0, 0);
+    visibility: visible;
+    display: block;
+    visibility: visible;
+  }
+}
+.img-fluid {
+    max-width: 100%;
+    height: 240px;
+}
+</style>
+
+{% endblock %}
+
+{% block JS %}
+
+{% if msg|length != 0 %}
+  <script>  
+  alert('{{msg}}');
+  window.location.href = "/outlet"
+  </script>
+{% endif %}
+<script>
+// =======================Carousel=========================================
+(function ($) {
+  "use strict";
+  // Auto-scroll
+  $('#myCarousel').carousel({
+    interval: 5000
+  });
+
+  // Control buttons
+  $('.next').click(function () {
+    $('.carousel').carousel('next');
+    return false;
+  });
+  $('.prev').click(function () {
+    $('.carousel').carousel('prev');
+    return false;
+  });
+
+  // On carousel scroll
+
+  $('#myCarousel').on("slide.bs.carousel", function (e) {
+    var $e = $(e.relatedTarget);
+    var idx = $e.index();
+    var itemsPerSlide = 4;
+    var totalItems = $(".carousel-item").length;
+    if (idx >= totalItems - (itemsPerSlide - 1)) {
+      var it = itemsPerSlide -
+          (totalItems - idx);
+      for (var i = 0; i < it; i++) {
+        // append slides to end 
+        if (e.direction == "left") {
+          $(
+            ".carousel-item").eq(i).appendTo(".carousel-inner");
+        } else {
+          $(".carousel-item").eq(0).appendTo(".carousel-inner");
+        }
+      }
+    }
+  });
+})(jQuery);
+// =======================Caraousel=============================================
+if (localStorage.getItem('cart') == null) {
+    var cart = {};
+} else {
+    cart = JSON.parse(localStorage.getItem('cart'));
+    updateCart(cart);
+}
+// If the add to cart button is clicked, add/increment the item
+//$('.cart').click(function() {
+    $('.divpr').on('click', 'button.cart', function(){
+    var idstr = this.id.toString();
+    if (cart[idstr] != undefined) {
+        qty = cart[idstr][0] + 1;
+    } 
+    else {
+        qty = 1;
+        name= document.getElementById('name'+ idstr).innerHTML;
+        price= document.getElementById('price'+ idstr).innerHTML;
+        cart[idstr] = [qty, name, parseInt(price)];
+
+    }
+    updateCart(cart);
+});
+//Add Popover to cart
+$('#popcart').popover();
+updatePopover(cart);
+function updatePopover(cart) {
+    console.log('We are inside updatePopover');
+    var popStr = "";
+    popStr = popStr + "<h5> Cart for your items in my shopping cart </h5><div class='mx-2 my-2'>";
+    var i = 1;
+    for (var item in cart) {
+        popStr = popStr + "<b>" + i + "</b>. ";
+        popStr = popStr + document.getElementById('name' + item).innerHTML.slice(0, 19) + "... Qty: " + cart[item][0] + '<br>';
+        i = i + 1;
+    }
+    popStr = popStr + "</div> <a href='/outlet/checkout'><button class='btn btn-primary' id ='checkout'>Checkout</button></a> <button class='btn btn-primary' onclick='clearCart()' id ='clearCart'>Clear Cart</button>     "
+    console.log(popStr);
+    document.getElementById('popcart').setAttribute('data-content', popStr);
+    $('#popcart').popover('show');
+}
+function clearCart() {
+    cart = JSON.parse(localStorage.getItem('cart'));
+    for (var item in cart) {
+        document.getElementById('div' + item).innerHTML = '<button id="' + item + '" class="btn btn-primary cart">Add To Cart</button>'
+    }
+    localStorage.clear();
+    cart = {};
+    updateCart(cart);
+}
+function updateCart(cart) {
+    var sum = 0;
+    for (var item in cart) {
+        sum = sum + cart[item][0];
+        document.getElementById('div' + item).innerHTML = "<button id='minus" + item + "' class='btn btn-primary minus'>-</button> <span id='val" + item + "''>" + cart[item][0] + "</span> <button id='plus" + item + "' class='btn btn-primary plus'> + </button>";
+    }
+    localStorage.setItem('cart', JSON.stringify(cart));
+    document.getElementById('cart').innerHTML = sum;
+    console.log(cart);
+    updatePopover(cart);
+}
+// If plus or minus button is clicked, change the cart as well as the display value
+$('.divpr').on("click", "button.minus", function() {
+    a = this.id.slice(7, );
+    cart['pr' + a][0] = cart['pr' + a][0] - 1;
+    cart['pr' + a][0] = Math.max(0, cart['pr' + a][0]);
+    // document.getElementById('valpr' + a).innerHTML = cart['pr' + a];
+    if (cart['pr' + a][0] == 0){
+        document.getElementById('divpr' + a).innerHTML = '<button id="pr'+a+'" class="btn btn-primary cart">Add to Cart</button>';
+        delete cart['pr'+a];
+    }
+    else{
+        document.getElementById('valpr' + a).innerHTML = cart['pr' + a][0];
+    }
+    updateCart(cart);
+});
+$('.divpr').on("click", "button.plus", function() {
+    a = this.id.slice(6, );
+    cart['pr' + a][0] = cart['pr' + a][0] + 1;
+    document.getElementById('valpr' + a).innerHTML = cart['pr' + a][0];
+    updateCart(cart);
+});
+
+</script>
+
+{% endblock %}
