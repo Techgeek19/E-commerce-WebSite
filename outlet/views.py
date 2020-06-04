@@ -35,7 +35,7 @@ def index(request):
     #     nSlides = n // 4 + ceil((n / 4) - (n // 4))
     #     allProds.append([prod, range(1, nSlides), nSlides])
     # params = {'allProds':allProds}
-    return render(request,'outlet/b.html',{'allprod':allprod})
+    return render(request,'outlet/index.html',{'allprod':allprod})
 
 def searchMatch(query, item):
     '''return true only if query matches the item'''

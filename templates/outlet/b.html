@@ -153,7 +153,7 @@
       }
     });
   });
-  // =======================Caraousel=============================================
+  // =======================Caraousel Ends=============================================
 
   if (localStorage.getItem('cart') == null) {
     var cart = {};
@@ -193,7 +193,7 @@
     popStr = popStr + "</div> <a href='/outlet/checkout'><button class='btn btn-primary' id ='checkout'>Checkout</button></a> <button class='btn btn-primary' onclick='clearCart()' id ='clearCart'>Clear Cart</button>     "
     console.log(popStr);
     document.getElementById('popcart').setAttribute('data-content', popStr);
-    $('#popcart').popover('show');
+    $('#popcart').popover('hide');
   }
   function clearCart() {
     cart = JSON.parse(localStorage.getItem('cart'));

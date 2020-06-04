@@ -3,9 +3,8 @@
 {% block title %} {% endblock %}
 
 {% block body %} 
-
 <div class="container">
-	<div class="col-lg-8 border p-3 main-section bg-white">
+	<div class="col-lg-8 border p-3 main-section bg-white mt-5">
 		<div class="row hedding m-0 pl-3 pt-0 pb-3">
 			{{ obj.category|title }} | {{ obj.subcategory|title }}
 		</div>
@@ -21,13 +20,13 @@
 			<div class="col-lg-7">
 				<div class="right-side-pro-detail border p-3 m-0">
 					<div class="row">
-						<div class="col-lg-6">
+						<div class="col-lg-12">
 							<!-- <span>{{obj.subcategory}}</span> -->
-                            <p class="m-0 p-0 my-2">{{ obj.product_name|title }}</p>
+                            <p class="m-0 p-0 my-2" id="namepr{{obj.id}}" style="font-weight: 600;">{{ obj.product_name|title }}</p>
                             <hr class="p-0 m-0">
-						</div>
-						<div class="col-lg-6">
-							<p class="m-0 p-0 price-pro my-2"> ₹{{obj.price}}/-</p>
+						</div> 
+						<div class="col-lg-12">
+							<p class="m-0 p-0 price-pro my-2" id="pricepr{{obj.id}}"> ₹{{obj.price}}/-</p>
 							<hr class="p-0 m-0">
 						</div>
 						<div class="col-lg-12 pt-2">
@@ -35,19 +34,20 @@
 							<span>{{ obj.desc }}</span><hr class="m-0 pt-2 mt-2">
 						</div>
 						<div class="col-lg-12">
-							<p class="tag-section"><strong>Tag : </strong><a href="">Woman</a><a href="">,Man</a></p>
+							<p class="tag-section"><strong>Tag : </strong><a href="">{{ obj.category|title }}</a><a href="">, {{ obj.subcategory|title }}</a></p>
 						</div>
-						<div class="col-lg-12">
-							<h6>Quantity :</h6>
-							<input type="number" class="form-control text-center w-100" value="1">
-						</div>
+						
+					
 						<div class="col-lg-12 mt-3">
 							<div class="row">
 								<div class="col-lg-6 pb-2">
-									<a href="#" class="btn btn-danger w-100">Add To Cart</a>
+									<span id="divpr{{obj.id}}" class="divpr">
+										<button id="pr{{ obj.id }}" type="button" class="btn btn-danger cart w-100">Add to Cart<i
+											class="fa fa-shopping-cart ml-2"></i>
+										</button></span>
 								</div>
 								<div class="col-lg-6">
-									<a href="#" class="btn btn-success w-100">Shop Now</a>
+									<a href="/outlet/checkout/" class="btn btn-success w-100">Shop Now</a>
 								</div>
 							</div>
 						</div>
@@ -55,12 +55,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="row">
+		<!-- <div class="row">
 			<div class="col-lg-12 text-center pt-3">
 				<h4>More Product</h4>
 			</div>
-		</div>
-		<div class="row mt-3 p-0 text-center pro-box-section">
+		</div> -->
+		<!-- <div class="row mt-3 p-0 text-center pro-box-section">
 			<div class="col-lg-3 pb-2">
 				<div class="pro-box border p-0 m-0">
 					<img src="http://nicesnippets.com/demo/pd-b-image1.jpg">
@@ -81,7 +81,7 @@
 					<img src="http://nicesnippets.com/demo/pd-b-images4.jpg">
 				</div>
 			</div>
-		</div>
+		</div> -->
 	</div>
 </div>
 {% endblock %}
@@ -93,8 +93,8 @@
     background-color: #f5f5f5
 }
 .hedding{
-	font-size: 20px;
-	color:#ab8181`;
+	font-size: 22px;
+    font-weight: 500;
 }
 .main-section{
 	position: absolute;
@@ -138,8 +138,89 @@
 
 {% block JS %} 
 <script>
-$('#popcart').popover();
-document.getElementById("popcart").setAttribute('data-content', '<h5>Cart for your items in my shopping cart</h5>');  
+
+ if (localStorage.getItem('cart') == null) {
+    var cart = {};
+  } else {
+    cart = JSON.parse(localStorage.getItem('cart'));
+    updateCart(cart);
+  }
+  // If the add to cart button is clicked, add/increment the item
+  //$('.cart').click(function() {
+  $('.divpr').on('click', 'button.cart', function () {
+    var idstr = this.id.toString();
+    if (cart[idstr] != undefined) {
+      qty = cart[idstr][0] + 1;
+    }
+    else {
+      qty = 1;
+      name = document.getElementById('name' + idstr).innerHTML;
+      price = document.getElementById('price' + idstr).innerHTML;
+      cart[idstr] = [qty, name, parseInt(price)];
+
+    }
+    updateCart(cart);
+  });
+  //Add Popover to cart
+  $('#popcart').popover();
+  updatePopover(cart);
+  function updatePopover(cart) {
+    console.log('We are inside updatePopover');
+    var popStr = "";
+    popStr = popStr + "<h6> Cart Items</h6><div class='mx-2 my-2'>";
+    var i = 1;
+    for (var item in cart) {
+      popStr = popStr + "<b>" + i + "</b>. ";
+      popStr = popStr + document.getElementById('name' + item).innerHTML.slice(0, 19) + "... Qty: " + cart[item][0] + '<br>';
+      i = i + 1;
+    }
+    popStr = popStr + "</div> <a href='/outlet/checkout' target='_blank'><button class='btn btn-primary' id ='checkout'>Checkout</button></a> <button class='btn btn-primary' onclick='clearCart()' id ='clearCart'>Clear Cart</button>     "
+    console.log(popStr);
+    document.getElementById('popcart').setAttribute('data-content', popStr);
+    $('#popcart').popover('hide');
+  }
+  function clearCart() {
+    cart = JSON.parse(localStorage.getItem('cart'));
+    for (var item in cart) {
+      document.getElementById('div' + item).innerHTML = '<button id="' + item + '" class="btn btn-danger cart" style="margin-left: 90px;"><i class="fa fa-shopping-cart"></i></button>'
+    }
+    localStorage.clear();
+    cart = {};
+    updateCart(cart);
+  }
+  
+  function updateCart(cart) {
+    var sum = 0;
+    for (var item in cart) {
+      sum = sum + cart[item][0];
+      document.getElementById('div' + item).innerHTML = "<h6>Quantity:  <button id='minus" + item + "' class='btn btn-info minus' style=''>-</button>  <span id='val" + item + "''>" + cart[item][0] + "</span>  <button id='plus" + item + "' class='btn btn-info plus'> + </button>";
+    }
+    localStorage.setItem('cart', JSON.stringify(cart));
+    document.getElementById('cart').innerHTML = sum;
+    console.log(cart);
+    updatePopover(cart);
+  }
+  // If plus or minus button is clicked, change the cart as well as the display value
+  $('.divpr').on("click", "button.minus", function () {
+    a = this.id.slice(7);
+    cart['pr' + a][0] = cart['pr' + a][0] - 1;
+    cart['pr' + a][0] = Math.max(0, cart['pr' + a][0]);
+    // document.getElementById('valpr' + a).innerHTML = cart['pr' + a];
+    if (cart['pr' + a][0] == 0) {
+      document.getElementById('divpr' + a).innerHTML = '<button id="pr' + a + '" class="btn btn-danger w-100 cart" style="">Add to Cart<i class="fa fa-shopping-cart ml-2"></i></button>';
+      delete cart['pr' + a];
+    }
+    else {
+      document.getElementById('valpr' + a).innerHTML = cart['pr' + a][0];
+    }
+    updateCart(cart);
+  });
+  $('.divpr').on("click", "button.plus", function () {
+    a = this.id.slice(6);
+    cart['pr' + a][0] = cart['pr' + a][0] + 1;
+    document.getElementById('valpr' + a).innerHTML = cart['pr' + a][0];
+    updateCart(cart);
+  });  
 </script>
 {% endblock %}
 

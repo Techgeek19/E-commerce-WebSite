@@ -12,12 +12,12 @@
     <div class="card-header card bg-secondary text-white">Step 1 - Review Your Cart Items</div>
     <div class="card-body">
     <div class="col">
-        <div id="items">
-            <ul class="list-group">
+        <div >
+            <ul class="list-group" id="items">
             </ul>
         </div>
-        <ul class="list-group-item d-flex justify-content-between align-items-center mt-4"> Cart Total is <span id="totalPrice">0</span>
-        </ul>
+        <li class="list-group-item d-flex justify-content-between mt-4"> Cart Total is <span id="totalPrice">0</span>
+        </li>
     </div>
 </div>
 </div>
@@ -73,17 +73,6 @@
     </div>
 </div>
 </div></div></div>  
-
-{% if messages %}
-{% for message in messages %}
-<script> 
-alert('{{ message }}.Your order ID is {{id}}')
-localStorage.clear();
-document.location = "/outlet";
-</script>
-{% endfor %} 
-{% endif %}
-
 {% endblock %}
 
 {% block CSS %} {% endblock %}
@@ -120,4 +109,13 @@ document.getElementById('cart').innerHTML = sum;
 document.getElementById('totalPrice').innerHTML = totalPrice;
 $('#itemsJson').val(JSON.stringify(cart));
 </script>
+{% if messages %}
+{% for message in messages %}
+<script> 
+alert('{{ message }}.Your order ID is {{id}}')
+localStorage.clear();
+document.location = "/outlet";
+</script>
+{% endfor %} 
+{% endif %}
 {% endblock %}
