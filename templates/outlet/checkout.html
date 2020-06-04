@@ -4,7 +4,7 @@
 {% block body %}  
 <div class="row" style="margin-top: 100px;">
     <div class="col-12">
-    <h1><span>C</span><span>h</span><span>e</span><span>c</span><span>k</span><span>o</span><span>u</span><span>t</span></h1>
+    <h1 class="abh"><span>C</span><span>h</span><span>e</span><span>c</span><span>k</span><span>o</span><span>u</span><span>t</span></h1>
         </div>	
     </div>		
 <div class="container"> 
@@ -16,7 +16,7 @@
             <ul class="list-group" id="items">
             </ul>
         </div>
-        <li class="list-group-item d-flex justify-content-between mt-4"> Cart Total is <span id="totalPrice">0</span>
+        <li class="list-group-item d-flex justify-content-between mt-4"> Your cart total is <span id="totalPrice">0</span>
         </li>
     </div>
 </div>
@@ -36,7 +36,7 @@
                     <input type="text" class="form-control" name="name" id="name" placeholder="Name">
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="inputEmail4">Email</label>
+                    <label for="inputEmail4">Email <a class="text-muted small">(Please remember your e-mail and Order Id for tracking purpose)</a></label>
                     <input type="email" class="form-control" id="email" name="email" placeholder="Email">
                 </div>
             </div>
@@ -75,7 +75,24 @@
 </div></div></div>  
 {% endblock %}
 
-{% block CSS %} {% endblock %}
+{% block CSS %} <style>
+      body.dark ul {
+    color: black;
+  }
+  body.dark p {
+    color: black;
+  }
+  body.dark label {
+    color: black;
+  }
+  body.dark li {
+    color: black;
+  }
+
+
+
+
+</style>{% endblock %}
 
 {% block JS %} 
 <script>

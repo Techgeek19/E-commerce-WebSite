@@ -4,7 +4,7 @@
 
 {% block body %} 
 <div class="container">
-	<div class="col-lg-8 border p-3 main-section bg-white mt-5">
+	<div class="col-lg-8 border p-3 main-section bg-white" style="margin-top: 72px;">
 		<div class="row hedding m-0 pl-3 pt-0 pb-3">
 			{{ obj.category|title }} | {{ obj.subcategory|title }}
 		</div>
@@ -88,16 +88,16 @@
 
 {% block CSS %} 
 <style>
-    body{
+    /* body{
     font-family: 'Roboto Condensed', sans-serif;
     background-color: #f5f5f5
-}
+} */
 .hedding{
 	font-size: 22px;
     font-weight: 500;
 }
 .main-section{
-	position: absolute;
+	/* position: absolute; */
 	left:50%;
 	right:50%;
 	transform: translate(-50%,5%);
@@ -133,6 +133,37 @@
 		height:auto;
 	}
 }
+
+body.dark h5{
+	color: black;
+}
+body.dark span{
+	color: black;
+}
+body.dark p{
+	color: #a1a1a1;
+}
+body.dark .hedding{
+	color: black;
+}
+body.dark h6{
+	color: black;
+}
+.check_icon {
+    color: #1e7e34;
+    font-size: 22px;
+    cursor: pointer;
+    margin-right: 8px;
+    margin-left: 150px;
+  }
+
+  .fa-trash-alt {
+    font-size: 22px;
+    cursor: pointer;
+    color: crimson;
+  }
+
+
 </style>
 {% endblock %}
 
@@ -167,14 +198,14 @@
   function updatePopover(cart) {
     console.log('We are inside updatePopover');
     var popStr = "";
-    popStr = popStr + "<h6> Cart Items</h6><div class='mx-2 my-2'>";
+	popStr = popStr + "<h6 style='text-align: center; font-weight: 600;'> Cart Items </h6><div class='mx-2 my-2'>";
     var i = 1;
     for (var item in cart) {
-      popStr = popStr + "<b>" + i + "</b>. ";
-      popStr = popStr + document.getElementById('name' + item).innerHTML.slice(0, 19) + "... Qty: " + cart[item][0] + '<br>';
+		popStr = popStr + "<div class='d-flex mb-1'><b>" + i + "</b>. ";
+      popStr = popStr + document.getElementById('name' + item).innerHTML.slice(0, 18) + "..." + "<div class='badge badge-info ml-auto mt-1'>" + cart[item][0] + '</div></div> ';
       i = i + 1;
     }
-    popStr = popStr + "</div> <a href='/outlet/checkout' target='_blank'><button class='btn btn-primary' id ='checkout'>Checkout</button></a> <button class='btn btn-primary' onclick='clearCart()' id ='clearCart'>Clear Cart</button>     "
+    popStr = popStr + "</div> <a href='/outlet/checkout' target='_blank'><i data-toggle='tooltip' title='Checkout' class='fas fa-check-circle check_icon' id ='checkout'></i></a> <i data-toggle='tooltip' title='Clear Cart' class='fas fa-trash-alt' onclick='clearCart()' id ='clearCart'></i>"
     console.log(popStr);
     document.getElementById('popcart').setAttribute('data-content', popStr);
     $('#popcart').popover('hide');
@@ -182,7 +213,7 @@
   function clearCart() {
     cart = JSON.parse(localStorage.getItem('cart'));
     for (var item in cart) {
-      document.getElementById('div' + item).innerHTML = '<button id="' + item + '" class="btn btn-danger cart" style="margin-left: 90px;"><i class="fa fa-shopping-cart"></i></button>'
+		document.getElementById('div' + item).innerHTML = '<button id="' + item + '" class="btn btn-danger w-100 cart" style="">Add to Cart<i class="fa fa-shopping-cart ml-2"></i></button>'
     }
     localStorage.clear();
     cart = {};
@@ -193,7 +224,7 @@
     var sum = 0;
     for (var item in cart) {
       sum = sum + cart[item][0];
-      document.getElementById('div' + item).innerHTML = "<h6>Quantity:  <button id='minus" + item + "' class='btn btn-info minus' style=''>-</button>  <span id='val" + item + "''>" + cart[item][0] + "</span>  <button id='plus" + item + "' class='btn btn-info plus'> + </button>";
+      document.getElementById('div' + item).innerHTML = "<h6>Qty:  <button id='minus" + item + "' class='btn btn-info minus' style=''>-</button>  <span id='val" + item + "''>" + cart[item][0] + "</span>  <button id='plus" + item + "' class='btn btn-info plus'> + </button>";
     }
     localStorage.setItem('cart', JSON.stringify(cart));
     document.getElementById('cart').innerHTML = sum;

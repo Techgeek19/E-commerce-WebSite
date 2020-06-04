@@ -71,7 +71,7 @@ def contact(request):
         message = request.POST.get('message', '')
         contact = Contact(name=name, email=email, message=message)
         contact.save()
-        messages.info(request, 'Your message has been delivered')
+        messages.info(request, 'Thanks for connecting with us. Your message has been successfully delivered')
     return render(request,'outlet/contact.html', {})
 
 def tracker(request):
