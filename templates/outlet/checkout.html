@@ -33,16 +33,16 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="inputname">Name</label>
-                    <input type="text" class="form-control" name="name" id="name" placeholder="Name">
+                    <input type="text" class="form-control" name="name" id="name" placeholder="Name" required>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="inputEmail4">Email <a class="text-muted small">(Please remember your e-mail and Order Id for tracking purpose)</a></label>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
                 </div>
             </div>
             <div class="form-group">
                 <label for="inputAddress">Address</label>
-                <input type="text" class="form-control" name="address1" id="address1" placeholder="1234 Main St">
+                <input type="text" class="form-control" name="address1" id="address1" required placeholder="1234 Main St">
             </div>
             <div class="form-group">
                 <label for="inputAddress2">Address line 2</label>
@@ -51,11 +51,11 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="inputCity">City</label>
-                    <input type="text" class="form-control" placeholder="Enter City" name="city" id="city">
+                    <input type="text" required class="form-control" placeholder="Enter City" name="city" id="city">
                 </div>
                 <div class="form-group col-md-4">
                     <label for="inputState">State</label>
-                    <input type="text" class="form-control" name="state" id="state" placeholder="Enter State">
+                    <input type="text" class="form-control" required name="state" id="state" placeholder="Enter State">
                 </div>
                 <div class="form-group col-md-2">
                     <label for="inputZip">Zip</label>
@@ -65,10 +65,10 @@
             <div class="form-row">
             <div class="form-group col-md-6">
                     <label for="inputZip">Phone Number</label>
-                    <input type="tel" class="form-control" placeholder="Enter Mobile Number" name="phone" id="phone">
+                    <input type="tel" class="form-control" placeholder="Enter Mobile Number" name="phone" id="phone" required>
                 </div>
             </div>
-            <button type="submit" class="btn btn-dark">Place Order</button>
+            <button type="submit" class="btn btn-submit btn-dark">Place Order</button>
         </form>
     </div>
 </div>
