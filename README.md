@@ -1,6 +1,6 @@
 # E-commerce Website 
 
-## Quick Start
+## Quick SetUp
 
 ``` bash
 $ virtualenv env
