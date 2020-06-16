@@ -20,7 +20,7 @@ $ pip3 install -r requirements.txt
 $ python manage.py makemigrations
 $ python manage.py migrate
 
-# Run Server (http://localhst:8000)
+# Run Server (http://localhost:8000)
 python3 manage.py runserver
 ```
 
